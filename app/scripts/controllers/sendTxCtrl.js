@@ -2,7 +2,13 @@
 var sendTxCtrl = function($scope, $sce, walletService) {
     $scope.ajaxReq = ajaxReq;
     $scope.unitReadable = ajaxReq.type;
-    $scope.sendTxModal = new Modal(document.getElementById('sendTransaction'));
+    
+    var sendTxModalElement = document.getElementById('sendTransaction');
+    $scope.sendTxModal = new Modal(sendTxModalElement);
+    sendTxModalElement.addEventListener('hidden.bs.modal', function () {
+      console.log('it happened');
+    }, false);
+
     walletService.wallet = null;
     walletService.password = '';
     $scope.showAdvance = $scope.showRaw = false;
