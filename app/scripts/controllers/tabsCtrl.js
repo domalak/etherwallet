@@ -73,7 +73,7 @@ var tabsCtrl = function($scope, globalService, $translate, $sce) {
                 $scope.notifier.danger(globalFuncs.errorMsgs[32]);
             } else {
                 $scope.nodeIsConnected = true;
-                $scope.notifier.info(globalFuncs.successMsgs[5] + 'to the <strong>' + $scope.nodeType + ' node</strong>, provided by ' + $scope.nodeService + '.')
+                $scope.notifier.info( globalFuncs.successMsgs[5] + '— Now, check the URL: <strong>' + window.location.href + '.</strong> <br /> Network: <strong>' + $scope.nodeType + ' </strong> provided by <strong>' + $scope.nodeService + '.</strong>', 5000)
             }
         });
     }
@@ -82,7 +82,10 @@ var tabsCtrl = function($scope, globalService, $translate, $sce) {
     }
     $scope.setCurNodeFromStorage = function() {
         var node = globalFuncs.localStorage.getItem('curNode', null);
-        if (node == null) {
+        if (node === JSON.stringify({"key":"eth_metamask"})) {
+          node = JSON.stringify({"key":"eth_infura"})
+        }
+       if (node == null) {
             $scope.changeNode($scope.defaultNodeKey);
         } else {
             node = JSON.parse(node);

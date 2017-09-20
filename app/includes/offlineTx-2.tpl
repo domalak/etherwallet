@@ -3,18 +3,8 @@
   <!-- To Address -->
   <article class="clearfix">
     <h2 class="col-xs-12" translate="OFFLINE_Step2_Title"> Step 2: Generate Transaction (Offline Computer) </h2>
-    <section class="col-xs-11">
-      <label translate="OFFLINE_Step2_Label_1">To Address:</label>
-      <input class="form-control"
-             type="text"
-             placeholder="0x7cB57B5A97eAbe94205C07890BE4c1aD31E486A8"
-             ng-model="tx.to"
-             ng-change="validateAddress(tx.to,'')"/>
-    </section>
 
-    <section class="col-xs-1 address-identicon-container">
-      <div class="addressIdenticon" title="Address Indenticon" blockie-address="{{tx.to}}" watch-var="tx.to"></div>
-    </section>
+    <address-field var-name="tx.to"></address-field>
 
     <section class="col-xs-12">
       <p>{{customGasMsg}}</p>
@@ -47,18 +37,6 @@
     </section>
   </article>
 
-  <!-- Gas Price -->
-  <article class="clearfix">
-    <section class="col-sm-11">
-      <a class="account-help-icon" href="https://myetherwallet.groovehq.com/knowledge_base/topics/what-is-gas" target="_blank" rel="noopener">
-        <img src="images/icon-help.svg" class="help-icon" />
-        <p class="account-help-text" translate="OFFLINE_Step2_Label_3b">This was displayed in Step 1</p>
-      </a>
-      <label translate="OFFLINE_Step2_Label_3"> Gas Price </label>
-      <input class="form-control" type="text" placeholder="" ng-model="gasPriceDec"/>
-    </section>
-  </article>
-
   <!-- Gas Limit -->
   <article class="clearfix">
     <section class="col-sm-11">
@@ -70,6 +48,29 @@
       <input class="form-control" type="text" placeholder="" ng-model="tx.gasLimit"/>
     </section>
   </article>
+
+  <!-- Gas Price -->
+  <article class="clearfix">
+    <section class="col-sm-11">
+      <a class="account-help-icon" href="https://myetherwallet.groovehq.com/knowledge_base/topics/what-is-gas" target="_blank" rel="noopener">
+        <img src="images/icon-help.svg" class="help-icon" />
+        <p class="account-help-text" translate="OFFLINE_Step2_Label_3b">This was displayed in Step 1</p>
+      </a>
+      <label translate="OFFLINE_Step2_Label_3"> Gas Price </label>
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               placeholder="50"
+               ng-model="gasPriceDec"
+               ng-disabled="checkTxReadOnly"
+               ng-class="Validator.isPositiveNumber(gasPriceDec) ? 'is-valid' : 'is-invalid'" />
+        <div class="input-group-btn">
+          <button style="min-width: 170px" class="btn btn-default">  WEI </button>
+        </div>
+      </div>
+    </section>
+  </article>
+
 
   <!-- Nonce -->
   <article class="clearfix">
@@ -110,15 +111,12 @@
   <section class="col-xs-12 clearfix">
     <a class="btn btn-info" ng-click="generateTx()" translate="SEND_generate">Generate Signed Transaction</a>
   </section>
-  <section class="col-sm-5 clearfix">
+  <section class="col-sm-6 clearfix">
     <label translate="SEND_raw"> Raw Transaction </label>
     <textarea class="form-control" placeholder="" readonly="readonly" rows="5" ng-model="rawTx"></textarea>
   </section>
-  <section class="col-sm-5 clearfix">
+  <section class="col-sm-6 clearfix">
     <label translate="SEND_signed"> Signed Transaction </label>
     <textarea class="form-control" placeholder="" readonly="readonly" rows="5" ng-model="signedTx"></textarea>
-  </section>
-  <section class="col-sm-2 cleafix">
-    <div class="qr-code" qr-code="{{signedTx}}" watch-var="signedTx" width="100%"></div>
   </section>
 </article>
